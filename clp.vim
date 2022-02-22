@@ -1,9 +1,9 @@
 " Vim syntax file
-" Language:	Control Language (CLP), based on Rexx.vim
+" Language:	Control Language (CLP), based on clp.vim
 " Maintainer:	Thomas Geulig <geulig@nentec.de>
 " Last Change:	2001 May 2
-" URL:		http://sites.netscape.net/sharpPeople/vim/syntax/rexx.vim
-"            or http://www.crosswinds.net/~vimuser/vim/syntax/rexx.vim
+" URL:		http://sites.netscape.net/sharpPeople/vim/syntax/clp.vim
+"            or http://www.crosswinds.net/~vimuser/vim/syntax/clp.vim
 "
 " Special Thanks to Dan Sharp <dwsharp@hotmail.com> for comments and additions
 " (and providing the webspace)
@@ -21,94 +21,94 @@ syn case ignore
 " A Keyword is the first symbol in a clause.  A clause begins at the start
 " of a line or after a semicolon.  THEN, ELSE, OTHERWISE, and colons are always
 " followed by an implied semicolon.
-syn match rexxClause "\(^\|;\|:\|then \|else \|otherwise \)\s*\w\+" contains=ALL
+syn match clpClause "\(^\|;\|:\|then \|else \|otherwise \)\s*\w\+" contains=ALL
 
 " Considered keywords when used together in a phrase and begin a clause
-syn match rexxKeyword contained "\<signal\( on \(error\|failure\|halt\|notready\|novalue\|syntax\|lostdigits\)\(\s\+name\)\=\)\=\>"
-syn match rexxKeyword contained "\<signal off \(error\|failure\|halt\|notready\|novalue\|syntax\|lostdigits\)\>"
-syn match rexxKeyword contained "\<call off \(error\|failure\|halt\|notready\)\>"
-syn match rexxKeyword contained "\<parse \(upper \)\=\(arg\|linein\|pull\|source\|var\|value\|version\)\>"
-syn match rexxKeyword contained "\<numeric \(digits\|form \(scientific\|engineering\|value\)\|fuzz\)\>"
-syn match rexxKeyword contained "\<\(address\|trace\)\( value\)\=\>"
-syn match rexxKeyword contained "\<procedure\( expose\)\=\>"
-syn match rexxKeyword contained "\<do\( forever\)\=\>"
+syn match clpKeyword contained "\<signal\( on \(error\|failure\|halt\|notready\|novalue\|syntax\|lostdigits\)\(\s\+name\)\=\)\=\>"
+syn match clpKeyword contained "\<signal off \(error\|failure\|halt\|notready\|novalue\|syntax\|lostdigits\)\>"
+syn match clpKeyword contained "\<call off \(error\|failure\|halt\|notready\)\>"
+syn match clpKeyword contained "\<parse \(upper \)\=\(arg\|linein\|pull\|source\|var\|value\|version\)\>"
+syn match clpKeyword contained "\<numeric \(digits\|form \(scientific\|engineering\|value\)\|fuzz\)\>"
+syn match clpKeyword contained "\<\(address\|trace\)\( value\)\=\>"
+syn match clpKeyword contained "\<procedure\( expose\)\=\>"
+syn match clpKeyword contained "\<do\( forever\)\=\>"
 
-" Another keyword phrase, separated to aid highlighting in rexxFunction
-syn match rexxKeyword2 contained "\<call\( on \(error\|failure\|halt\|notready\)\(\s\+name\)\=\)\=\>"
+" Another keyword phrase, separated to aid highlighting in clpFunction
+syn match clpKeyword2 contained "\<call\( on \(error\|failure\|halt\|notready\)\(\s\+name\)\=\)\=\>"
 
 " Considered keywords when they begin a clause
-syn match rexxKeyword contained "\<\(do\|enddo\|chgvar\|pgm\|if\|endpgm\|monmsg\|dcl\|dclf\)\>"
-syn match rexxKeyword contained "\<\(chkobj\|pull\|push\|queue\|return\|say\|select\|trace\)\>"
+syn match clpKeyword contained "\<\(do\|enddo\|chgvar\|pgm\|if\|endpgm\|monmsg\|dcl\|dclf\)\>"
+syn match clpKeyword contained "\<\(chkobj\|pull\|push\|queue\|return\|say\|select\|trace\)\>"
 
 " Conditional phrases
-syn match rexxConditional "\(^\s*\| \)\(to\|by\|for\|until\|while\|then\|when\|otherwise\|else\)\( \|\s*$\)" contains=ALLBUT,rexxConditional
-syn match rexxConditional contained "\<\(to\|by\|for\|until\|while\|then\|when\|else\|otherwise\)\>"
+syn match clpConditional "\(^\s*\| \)\(to\|by\|for\|until\|while\|then\|when\|otherwise\|else\)\( \|\s*$\)" contains=ALLBUT,clpConditional
+syn match clpConditional contained "\<\(to\|by\|for\|until\|while\|then\|when\|else\|otherwise\)\>"
 
 " Assignments -- a keyword followed by an equal sign becomes a variable
-syn match rexxAssign "\<\w\+\s*=\s*" contains=rexxSpecialVariable
+syn match clpAssign "\<\w\+\s*=\s*" contains=clpSpecialVariable
 
 " Functions/Procedures
-syn match rexxFunction	"\<\h\w*\(/\*\s*\*/\)*("me=e-1 contains=rexxComment,rexxConditional,rexxKeyword
-syn match rexxFunction	"\<\(arg\|trace\)\(/\*\s*\*/\)*("me=e-1
-syn match rexxFunction	"\<call\( on \(error\|failure\|halt\|notready\)\(\s\+name\)\=\)\=\>\s\+\w\+\>" contains=rexxKeyword2
+syn match clpFunction	"\<\h\w*\(/\*\s*\*/\)*("me=e-1 contains=clpComment,clpConditional,clpKeyword
+syn match clpFunction	"\<\(arg\|trace\)\(/\*\s*\*/\)*("me=e-1
+syn match clpFunction	"\<call\( on \(error\|failure\|halt\|notready\)\(\s\+name\)\=\)\=\>\s\+\w\+\>" contains=clpKeyword2
 
 " String constants
-syn region rexxString	  start=+"+ skip=+\\\\\|\\'+ end=+"+
-syn region rexxString	  start=+'+ skip=+\\\\\|\\"+ end=+'+
-syn match  rexxCharacter  +"'[^\\]'"+
+syn region clpString	  start=+"+ skip=+\\\\\|\\'+ end=+"+
+syn region clpString	  start=+'+ skip=+\\\\\|\\"+ end=+'+
+syn match  clpCharacter  +"'[^\\]'"+
 
 " Catch errors caused by wrong parenthesis
-syn region rexxParen transparent start='(' end=')' contains=ALLBUT,rexxParenError,rexxTodo,rexxUserLabel,rexxKeyword
-syn match rexxParenError	 ")"
-syn match rexxInParen		"[\\[\\]{}]"
+syn region clpParen transparent start='(' end=')' contains=ALLBUT,clpParenError,clpTodo,clpUserLabel,clpKeyword
+syn match clpParenError	 ")"
+syn match clpInParen		"[\\[\\]{}]"
 
 " Comments
-syn region rexxComment		start="/\*" end="\*/" contains=rexxTodo,rexxComment
-syn match  rexxCommentError	"\*/"
+syn region clpComment		start="/\*" end="\*/" contains=clpTodo,clpComment
+syn match  clpCommentError	"\*/"
 
-syn keyword rexxTodo contained	TODO FIXME XXX
+syn keyword clpTodo contained	TODO FIXME XXX
 
 " Highlight User Labels
-syn match rexxUserLabel		 "\<\I\i*\s*:"me=e-1
+syn match clpUserLabel		 "\<\I\i*\s*:"me=e-1
 
 " Special Variables
-syn keyword rexxSpecialVariable  sigl rc result
-syn match   rexxCompoundVariable "\<\w\+\.\w*\>"
+syn keyword clpSpecialVariable  sigl rc result
+syn match   clpCompoundVariable "\<\w\+\.\w*\>"
 
-if !exists("rexx_minlines")
-  let rexx_minlines = 10
+if !exists("clp_minlines")
+  let clp_minlines = 10
 endif
-exec "syn sync ccomment rexxComment minlines=" . rexx_minlines
+exec "syn sync ccomment clpComment minlines=" . clp_minlines
 
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already
 " For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_rexx_syn_inits")
+if version >= 508 || !exists("did_clp_syn_inits")
   if version < 508
-    let did_rexx_syn_inits = 1
-    command -nargs=+ HiLink hi link <args>
+    let did_clp_syn_inits = 1
+    command -nargs=+ highlight link hi link <args>
   else
-    command -nargs=+ HiLink hi def link <args>
+    command -nargs=+ highlight link hi def link <args>
   endif
 
-  HiLink rexxUserLabel		Function
-  HiLink rexxCharacter		Character
-  HiLink rexxParenError		rexxError
-  HiLink rexxInParen		rexxError
-  HiLink rexxCommentError	rexxError
-  HiLink rexxError		Error
-  HiLink rexxKeyword		Statement
-  HiLink rexxKeyword2		rexxKeyword
-  HiLink rexxFunction		Function
-  HiLink rexxString		String
-  HiLink rexxComment		Comment
-  HiLink rexxTodo		Todo
-  HiLink rexxSpecialVariable	Special
-  HiLink rexxConditional	rexxKeyword
+  highlight link clpUserLabel		Function
+  highlight link clpCharacter		Character
+  highlight link clpParenError		clpError
+  highlight link clpInParen		clpError
+  highlight link clpCommentError	clpError
+  highlight link clpError		Error
+  highlight link clpKeyword		Statement
+  highlight link clpKeyword2		clpKeyword
+  highlight link clpFunction		Function
+  highlight link clpString		String
+  highlight link clpComment		Comment
+  highlight link clpTodo		Todo
+  highlight link clpSpecialVariable	Special
+  highlight link clpConditional	clpKeyword
 
-  delcommand HiLink
+  delcommand highlight link
 endif
 
-let b:current_syntax = "rexx"
+let b:current_syntax = "clp"
 
 "vim: ts=8
